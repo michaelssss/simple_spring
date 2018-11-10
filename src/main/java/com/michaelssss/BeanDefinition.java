@@ -1,6 +1,7 @@
 package com.michaelssss;
 
 import java.lang.reflect.Method;
+import java.util.Map;
 import java.util.Set;
 public interface BeanDefinition {
 
@@ -8,5 +9,7 @@ public interface BeanDefinition {
 
     Class<?> getTargetClass();
 
-    Set<Method> getInjectFieldSetter();
+    Map<Method, Object> getInjectFieldSetter();
+
+
 }

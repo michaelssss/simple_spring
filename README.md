@@ -29,3 +29,43 @@ public interface BeanDefinition{
 这个接口用于Bean的定义
 
 新建一个ApplicationContext用于获取Bean实例
+
+```java
+public interface ApplicationContext {
+    Object getBean(String beanId);
+}
+
+```
+
+建立测试类
+
+```java
+public class Test {
+    @org.junit.Test
+    public void test() {
+        ApplicationContext applicationContext = new DefaultApplicationContext();
+        TestBean testBean = (TestBean) applicationContext.getBean("testBean");
+        Assert.assertNotNull(testBean);
+        Assert.assertTrue(TestBean.class.isInstance(testBean));
+    }
+}
+```
+
+可以发现正常实例化了对象
+
+但是当前的实例化还是写在了DemoApplicationContext并没有将Bean初始化的职责剥离出来
+
+下一步我们将Bean的定义从Java代码迁移至XML文件
+
+#### 将Bean的定义写入XML
+
+建立一个XML文件在resources下
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<beans>
+    <bean class = "com.michaelssss.TestBean" id="testBean">
+        <attr name="word">attr1</attr>
+    </bean>
+</beans>
+```
+
