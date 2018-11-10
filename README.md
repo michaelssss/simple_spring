@@ -69,3 +69,6 @@ public class Test {
 </beans>
 ```
 
+学习使用Dom4j的库
+
+详情看XMLApplicationContext的实现以及BeanDefinitionInXMLLoader的实现

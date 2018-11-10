@@ -11,8 +11,8 @@ public class XMLApplicationContext implements ApplicationContext {
     private final Map<BeanDefinition, Object> instances = new ConcurrentHashMap<>();
 
     public XMLApplicationContext(String relatePath) {
-        BeanDefinitionInXMLLoadder beanDefinitionInXMLLoadder = BeanDefinitionInXMLLoadder.newInstance(relatePath);
-        Set<BeanDefinition> beanDefinitions = beanDefinitionInXMLLoadder.parse();
+        BeanDefinitionInXMLLoader beanDefinitionInXMLLoader = BeanDefinitionInXMLLoader.newInstance(relatePath);
+        Set<BeanDefinition> beanDefinitions = beanDefinitionInXMLLoader.parse();
         for (BeanDefinition beanDefinition : beanDefinitions) {
             try {
                 Object instance = beanDefinition.getTargetClass().getConstructor(new Class[]{}).newInstance();

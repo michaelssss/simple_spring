@@ -8,19 +8,19 @@ import org.dom4j.io.SAXReader;
 
 import java.util.*;
 
-public class BeanDefinitionInXMLLoadder {
+public class BeanDefinitionInXMLLoader {
     private String relatePath;
 
     private Document document;
 
-    public static BeanDefinitionInXMLLoadder newInstance(String relatePath) {
-        return new BeanDefinitionInXMLLoadder(relatePath);
+    public static BeanDefinitionInXMLLoader newInstance(String relatePath) {
+        return new BeanDefinitionInXMLLoader(relatePath);
     }
 
-    private BeanDefinitionInXMLLoadder() {
+    private BeanDefinitionInXMLLoader() {
     }
 
-    private BeanDefinitionInXMLLoadder(String relatePath) {
+    private BeanDefinitionInXMLLoader(String relatePath) {
         this.relatePath = relatePath;
         this.document = null;
         loadFile();
