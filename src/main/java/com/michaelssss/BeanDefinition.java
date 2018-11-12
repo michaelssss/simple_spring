@@ -9,7 +9,5 @@ public interface BeanDefinition {
 
   Class<?> getTargetClass();
 
-  Map<Method, Object> getInjectFieldSetter();
-
-
+  Map<Method, RefObject> getInjectFieldsReference();
 }

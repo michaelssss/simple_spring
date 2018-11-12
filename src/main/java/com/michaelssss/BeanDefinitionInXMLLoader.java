@@ -1,5 +1,6 @@
 package com.michaelssss;
 
+import com.michaelssss.utils.StringUtils;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -53,11 +54,17 @@ public class BeanDefinitionInXMLLoader {
       ((DefaultBeanDefinition) beanDefinition).setId(id.getValue());
       ((DefaultBeanDefinition) beanDefinition).setClassFullName(clazz.getValue());
       List<Element> subElements = element.elements("field");
-      Map<String, Object> map = new HashMap<>();
+      Map<String, RefObject> map = new HashMap<>();
       for (Element element1 : subElements) {
         String fieldName = element1.attribute("name").getValue();
-        String fieldValue = element1.getStringValue();
-        map.put(fieldName, fieldValue);
+        RefObject refObject = new RefObject();
+        String fieldDefinition = element1.attributeValue("value");
+        if (StringUtils.isNotEmpty(fieldDefinition)) {
+          refObject.setDirectValue(fieldDefinition);
+        } else {
+          refObject.setRefBeanId(element1.attributeValue("ref"));
+        }
+        map.put(fieldName, refObject);
       }
       ((DefaultBeanDefinition) beanDefinition).setInjectFieldsReference(map);
       result.add(beanDefinition);

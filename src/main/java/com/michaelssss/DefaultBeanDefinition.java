@@ -10,26 +10,40 @@ public class DefaultBeanDefinition implements BeanDefinition {
 
   private String classFullName;
 
-  private Map<String, Object> injectFieldsReference;
+  private Map<String, RefObject> injectFieldsReference;
 
-  public DefaultBeanDefinition(String id, String classFullName,
-      Map<String, Object> injectFieldsName) {
-    this.id = id;
-    this.classFullName = classFullName;
-    this.injectFieldsReference = injectFieldsName;
-  }
 
   public DefaultBeanDefinition() {
   }
 
-  public static Map<String, Object> getSetterString(Map<String, Object> fields) {
-    Map<String, Object> result = new HashMap<>();
+  private static Map<String, RefObject> getSetterString(Map<String, RefObject> fields) {
+    Map<String, RefObject> refObjectMap = new HashMap<>();
     fields.forEach((key, value) -> {
-      result
-          .put("set" + key.replace(key.charAt(0), (char) Character.toUpperCase(key.codePointAt(0))),
+      refObjectMap
+          .put("set" + key.replaceFirst(String.valueOf(key.charAt(0)),
+              String.valueOf(Character.toUpperCase(key.charAt(0)))),
               value);
     });
-    return result;
+    return refObjectMap;
+  }
+
+  public Map<Method, RefObject> getInjectFieldsReference() {
+    Map<Method, RefObject> methodRefObjectMap = new HashMap<>();
+    Method[] methods = getTargetClass().getMethods();
+    this.injectFieldsReference.forEach((key, value) -> {
+      for (Method method : methods) {
+        if (method.getName().equals(key)) {
+          methodRefObjectMap.put(method, value);
+
+        }
+      }
+    });
+    return methodRefObjectMap;
+  }
+
+  public void setInjectFieldsReference(
+      Map<String, RefObject> injectFieldsReference) {
+    this.injectFieldsReference = getSetterString(injectFieldsReference);
   }
 
   public String getClassFullName() {
@@ -38,14 +52,6 @@ public class DefaultBeanDefinition implements BeanDefinition {
 
   public void setClassFullName(String classFullName) {
     this.classFullName = classFullName;
-  }
-
-  public Map<String, Object> getInjectFieldsReference() {
-    return injectFieldsReference;
-  }
-
-  public void setInjectFieldsReference(Map<String, Object> injectFieldsReference) {
-    this.injectFieldsReference = injectFieldsReference;
   }
 
   public String getId() {
@@ -64,21 +70,5 @@ public class DefaultBeanDefinition implements BeanDefinition {
       e.printStackTrace();
     }
     return clazz;
-  }
-
-  public Map<Method, Object> getInjectFieldSetter() {
-    Class<?> clazz = getTargetClass();
-    Map<Method, Object> map = new HashMap<>();
-    Map<String, Object> methodNames = DefaultBeanDefinition
-        .getSetterString(this.injectFieldsReference);
-    for (Map.Entry<String, Object> entry : methodNames.entrySet()) {
-      Method[] methods = clazz.getMethods();
-      for (Method method : methods) {
-        if (method.getName().equals(entry.getKey())) {
-          map.put(method, entry.getValue());
-        }
-      }
-    }
-    return map;
   }
 }

@@ -72,3 +72,9 @@ public class Test {
 学习使用Dom4j的库
 
 详情看XMLApplicationContext的实现以及BeanDefinitionInXMLLoader的实现
+
+## 2018-11-12
+
+重构文件结构，将类初始化功能从ApplicationContext玻璃到BeanUtils中
+
+写的过程中就会遇到，我们parse不能在解析的时候就解析注入，所以初始化类与注入应该分开

@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <beans>
-    <bean class = "com.michaelssss.TestBean" id="testBean">
-        <field name="word">attr1</field>
-    </bean>
+  <bean class="com.michaelssss.TestBean" id="testBean">
+    <field name="word" value="attr1"/>
+
+  </bean>
+  <bean class="com.michaelssss.TestBean" id="refBean">
+    <field name="word" value="attr2"/>
+    <field name="testBean" ref="testBean"/>
+  </bean>
 </beans>
