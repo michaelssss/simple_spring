@@ -1,5 +1,6 @@
 package com.michaelssss;
 
 public interface ApplicationContext {
-    Object getBean(String beanId);
+
+  Object getBean(String beanId);
 }

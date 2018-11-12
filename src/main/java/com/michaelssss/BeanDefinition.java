@@ -2,14 +2,14 @@ package com.michaelssss;
 
 import java.lang.reflect.Method;
 import java.util.Map;
-import java.util.Set;
+
 public interface BeanDefinition {
 
-    String getId();
+  String getId();
 
-    Class<?> getTargetClass();
+  Class<?> getTargetClass();
 
-    Map<Method, Object> getInjectFieldSetter();
+  Map<Method, Object> getInjectFieldSetter();
 
 
 }

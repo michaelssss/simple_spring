@@ -1,17 +1,18 @@
 package com.michaelssss;
 
 public class TestBean {
-    private String word;
 
-    public String getWord() {
-        return word;
-    }
+  private String word;
 
-    public void setWord(String word) {
-        this.word = word;
-    }
+  public String getWord() {
+    return word;
+  }
 
-    public void print() {
-        System.out.println("Hello World :" + this.word);
-    }
+  public void setWord(String word) {
+    this.word = word;
+  }
+
+  public void print() {
+    System.out.println("Hello World :" + this.word);
+  }
 }
