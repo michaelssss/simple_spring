@@ -3,6 +3,7 @@ package com.michaelssss.impl;
 import com.michaelssss.BeanDefinition;
 import com.michaelssss.BeanDefinitionLoader;
 import com.michaelssss.InitialBeanFailedException;
+import com.michaelssss.impl.DefaultBeanDefinition.DefaultBeanDefinitionBuilder;
 import com.michaelssss.utils.StringUtils;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -50,9 +51,6 @@ public class BeanDefinitionXMLLoader implements BeanDefinitionLoader {
       Element element = elementIterator.next();
       Attribute id = element.attribute("id");
       Attribute clazz = element.attribute("class");
-      BeanDefinition beanDefinition = new DefaultBeanDefinition();
-      ((DefaultBeanDefinition) beanDefinition).setId(id.getValue());
-      ((DefaultBeanDefinition) beanDefinition).setClassFullName(clazz.getValue());
       List<Element> subElements = element.elements("field");
       Map<String, RefObject> map = new HashMap<>();
       for (Element element1 : subElements) {
@@ -66,8 +64,12 @@ public class BeanDefinitionXMLLoader implements BeanDefinitionLoader {
         }
         map.put(fieldName, refObject);
       }
-      ((DefaultBeanDefinition) beanDefinition).setInjectFieldsReference(map);
-      result.add(beanDefinition);
+      result.add(DefaultBeanDefinitionBuilder
+          .aDefaultBeanDefinition()
+          .withId(id.getValue())
+          .withClassFullName(clazz.getValue())
+          .withInjectFieldsReference(map)
+          .build());
     }
     return result;
   }

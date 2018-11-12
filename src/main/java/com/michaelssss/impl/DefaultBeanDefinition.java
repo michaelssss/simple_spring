@@ -14,7 +14,7 @@ public class DefaultBeanDefinition implements BeanDefinition {
   private Map<String, RefObject> injectFieldsReference;
 
 
-  public DefaultBeanDefinition() {
+  private DefaultBeanDefinition() {
   }
 
   private static Map<String, RefObject> getSetterString(Map<String, RefObject> fields) {
@@ -42,7 +42,7 @@ public class DefaultBeanDefinition implements BeanDefinition {
     return methodRefObjectMap;
   }
 
-  public void setInjectFieldsReference(
+  private void setInjectFieldsReference(
       Map<String, RefObject> injectFieldsReference) {
     this.injectFieldsReference = getSetterString(injectFieldsReference);
   }
@@ -51,7 +51,7 @@ public class DefaultBeanDefinition implements BeanDefinition {
     return classFullName;
   }
 
-  public void setClassFullName(String classFullName) {
+  private void setClassFullName(String classFullName) {
     this.classFullName = classFullName;
   }
 
@@ -59,7 +59,7 @@ public class DefaultBeanDefinition implements BeanDefinition {
     return id;
   }
 
-  public void setId(String id) {
+  private void setId(String id) {
     this.id = id;
   }
 
@@ -71,5 +71,38 @@ public class DefaultBeanDefinition implements BeanDefinition {
       e.printStackTrace();
     }
     return clazz;
+  }
+
+  public static final class DefaultBeanDefinitionBuilder {
+
+    private DefaultBeanDefinition defaultBeanDefinition;
+
+    private DefaultBeanDefinitionBuilder() {
+      defaultBeanDefinition = new DefaultBeanDefinition();
+    }
+
+    public static DefaultBeanDefinitionBuilder aDefaultBeanDefinition() {
+      return new DefaultBeanDefinitionBuilder();
+    }
+
+    public DefaultBeanDefinitionBuilder withId(String id) {
+      defaultBeanDefinition.setId(id);
+      return this;
+    }
+
+    public DefaultBeanDefinitionBuilder withClassFullName(String classFullName) {
+      defaultBeanDefinition.setClassFullName(classFullName);
+      return this;
+    }
+
+    public DefaultBeanDefinitionBuilder withInjectFieldsReference(
+        Map<String, RefObject> injectFieldsReference) {
+      defaultBeanDefinition.setInjectFieldsReference(injectFieldsReference);
+      return this;
+    }
+
+    public DefaultBeanDefinition build() {
+      return defaultBeanDefinition;
+    }
   }
 }
