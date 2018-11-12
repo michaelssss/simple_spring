@@ -2,7 +2,6 @@
 <beans>
   <bean class="com.michaelssss.TestBean" id="testBean">
     <field name="word" value="attr1"/>
-
   </bean>
   <bean class="com.michaelssss.TestBean" id="refBean">
     <field name="word" value="attr2"/>

@@ -8,7 +8,14 @@ public class XMLApplicationContext implements ApplicationContext {
 
   private BeanFactory beanFactory;
 
+  private String relatePath;
+
   public XMLApplicationContext(String relatePath) {
+    this.relatePath = relatePath;
+    beanFactory = BeanFactory.newInstance(load());
+  }
+
+  private Map<String, BeanDefinition> load() {
     BeanDefinitionInXMLLoader beanDefinitionInXMLLoader = BeanDefinitionInXMLLoader
         .newInstance(relatePath);
     Set<BeanDefinition> beanDefinitions = beanDefinitionInXMLLoader.parse();
@@ -16,7 +23,7 @@ public class XMLApplicationContext implements ApplicationContext {
     beanDefinitions.parallelStream().forEach(beanDefinition ->
         beanDefinitionMap.put(beanDefinition.getId(), beanDefinition)
     );
-    beanFactory = BeanFactory.newInstance(beanDefinitionMap);
+    return beanDefinitionMap;
   }
 
   @Override

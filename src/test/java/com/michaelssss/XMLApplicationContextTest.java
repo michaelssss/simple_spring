@@ -11,7 +11,6 @@ public class XMLApplicationContextTest {
   public void testGetBean() {
     TestBean testBean = (TestBean) applicationContext.getBean("refBean");
     Assert.assertNotNull(testBean);
-    Assert.assertTrue(TestBean.class.isInstance(testBean));
     testBean.print();
   }
 
