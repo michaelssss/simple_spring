@@ -1,5 +1,6 @@
 package com.michaelssss;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,14 +15,15 @@ public class XMLApplicationContext implements ApplicationContext {
         .newInstance(relatePath);
     Set<BeanDefinition> beanDefinitions = beanDefinitionInXMLLoader.parse();
     for (BeanDefinition beanDefinition : beanDefinitions) {
-      instances.put(beanDefinition, BeanFactory.initial(beanDefinition));
+      instances.put(beanDefinition, BeanUtils.initial(beanDefinition));
     }
   }
 
   @Override
   public Object getBean(String beanId) {
-    return instances.getOrDefault(instances.keySet().parallelStream()
+    List<BeanDefinition> beanDefinitionList = instances.keySet().parallelStream()
         .filter(beanDefinition -> beanDefinition.getId().equals(beanId))
-        .collect(Collectors.toList()).get(0), null);
+        .collect(Collectors.toList());
+    return beanDefinitionList.isEmpty() ? null : instances.get(beanDefinitionList.get(0));
   }
 }

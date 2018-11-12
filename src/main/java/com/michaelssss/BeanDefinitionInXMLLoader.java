@@ -37,7 +37,7 @@ public class BeanDefinitionInXMLLoader {
       this.document = reader
           .read(Thread.currentThread().getContextClassLoader().getResourceAsStream(relatePath));
     } catch (DocumentException e) {
-      e.printStackTrace();
+      throw new InitialBeanFailedException("parse XML failed");
     }
   }
 
