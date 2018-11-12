@@ -1,7 +1,7 @@
 package com.michaelssss.impl;
 
 import com.michaelssss.BeanDefinition;
-import com.michaelssss.BeanDefinitionInLoader;
+import com.michaelssss.BeanDefinitionLoader;
 import com.michaelssss.InitialBeanFailedException;
 import com.michaelssss.utils.StringUtils;
 import java.util.HashMap;
@@ -16,16 +16,16 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
-public class BeanDefinitionInXMLLoader implements BeanDefinitionInLoader {
+public class BeanDefinitionXMLLoader implements BeanDefinitionLoader {
 
   private String relatePath;
 
   private Document document;
 
-  private BeanDefinitionInXMLLoader() {
+  private BeanDefinitionXMLLoader() {
   }
 
-  public BeanDefinitionInXMLLoader(String relatePath) {
+  public BeanDefinitionXMLLoader(String relatePath) {
     this.relatePath = relatePath;
     this.document = null;
     loadFile();

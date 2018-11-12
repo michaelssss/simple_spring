@@ -2,7 +2,7 @@ package com.michaelssss.impl;
 
 import com.michaelssss.ApplicationContext;
 import com.michaelssss.BeanDefinition;
-import com.michaelssss.BeanDefinitionInLoader;
+import com.michaelssss.BeanDefinitionLoader;
 import com.michaelssss.BeanFactory;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +13,6 @@ public class XMLApplicationContext implements ApplicationContext {
   private BeanFactory beanFactory;
 
   private String relatePath;
-  private BeanDefinitionInLoader beanDefinitionInLoader;
 
   public XMLApplicationContext(String relatePath) {
     this.relatePath = relatePath;
@@ -21,9 +20,9 @@ public class XMLApplicationContext implements ApplicationContext {
   }
 
   private Map<String, BeanDefinition> load() {
-    beanDefinitionInLoader = BeanDefinitionInLoader
+    BeanDefinitionLoader beanDefinitionLoader = BeanDefinitionLoader
         .newInstance(relatePath);
-    Set<BeanDefinition> beanDefinitions = beanDefinitionInLoader.parse();
+    Set<BeanDefinition> beanDefinitions = beanDefinitionLoader.parse();
     Map<String, BeanDefinition> beanDefinitionMap = new HashMap<>();
     beanDefinitions.parallelStream().forEach(beanDefinition ->
         beanDefinitionMap.put(beanDefinition.getId(), beanDefinition)
