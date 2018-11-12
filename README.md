@@ -78,3 +78,14 @@ public class Test {
 重构文件结构，将类初始化功能从ApplicationContext玻璃到BeanUtils中
 
 写的过程中就会遇到，我们parse不能在解析的时候就解析注入，所以初始化类与注入应该分开
+
+
+### 接口描述
+
+BeanDefinition 用于描述类是如何组装的
+
+BeanDefinitionLoader 用于加载外部BeanDefinition描述并加载为BeanDefinition
+
+ApplicationContext 用于外部使用获取组装后的Bean定义
+
+至此，所有的IOC核心部件已经齐全

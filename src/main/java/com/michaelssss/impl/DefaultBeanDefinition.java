@@ -1,5 +1,6 @@
-package com.michaelssss;
+package com.michaelssss.impl;
 
+import com.michaelssss.BeanDefinition;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;

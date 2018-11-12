@@ -1,4 +1,4 @@
-package com.michaelssss;
+package com.michaelssss.impl;
 
 import com.michaelssss.utils.StringUtils;
 

@@ -1,5 +1,8 @@
-package com.michaelssss;
+package com.michaelssss.impl;
 
+import com.michaelssss.BeanDefinition;
+import com.michaelssss.BeanDefinitionInLoader;
+import com.michaelssss.InitialBeanFailedException;
 import com.michaelssss.utils.StringUtils;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,7 +16,7 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
-public class BeanDefinitionInXMLLoader {
+public class BeanDefinitionInXMLLoader implements BeanDefinitionInLoader {
 
   private String relatePath;
 
@@ -22,14 +25,10 @@ public class BeanDefinitionInXMLLoader {
   private BeanDefinitionInXMLLoader() {
   }
 
-  private BeanDefinitionInXMLLoader(String relatePath) {
+  public BeanDefinitionInXMLLoader(String relatePath) {
     this.relatePath = relatePath;
     this.document = null;
     loadFile();
-  }
-
-  public static BeanDefinitionInXMLLoader newInstance(String relatePath) {
-    return new BeanDefinitionInXMLLoader(relatePath);
   }
 
   private void loadFile() {
@@ -42,6 +41,7 @@ public class BeanDefinitionInXMLLoader {
     }
   }
 
+  @Override
   public Set<BeanDefinition> parse() {
     Element rootElement = this.document.getRootElement();
     Iterator<Element> elementIterator = rootElement.elementIterator("bean");

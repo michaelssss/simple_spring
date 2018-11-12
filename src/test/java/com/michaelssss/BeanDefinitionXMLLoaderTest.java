@@ -5,7 +5,8 @@ import org.junit.Test;
 public class BeanDefinitionXMLLoaderTest {
     @Test
     public void testParse() {
-        BeanDefinitionInXMLLoader beanDefinitionInXMLLoader = BeanDefinitionInXMLLoader.newInstance("DemoXML.xml");
-        beanDefinitionInXMLLoader.parse();
+        BeanDefinitionInLoader beanDefinitionInLoader = BeanDefinitionInLoader.newInstance(
+            "DemoXML.xml");
+        beanDefinitionInLoader.parse();
     }
 }
