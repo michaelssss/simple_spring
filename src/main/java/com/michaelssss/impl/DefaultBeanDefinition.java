@@ -1,8 +1,8 @@
 package com.michaelssss.impl;
 
 import com.michaelssss.BeanDefinition;
-import java.lang.reflect.Method;
-import java.util.HashMap;
+import com.michaelssss.BeanPropertyAccessor;
+import java.util.Collections;
 import java.util.Map;
 
 public class DefaultBeanDefinition implements BeanDefinition {
@@ -13,38 +13,19 @@ public class DefaultBeanDefinition implements BeanDefinition {
 
   private Map<String, RefObject> injectFieldsReference;
 
+  private BeanPropertyAccessor beanPropertyAccessor;
+
 
   private DefaultBeanDefinition() {
   }
 
-  private static Map<String, RefObject> getSetterString(Map<String, RefObject> fields) {
-    Map<String, RefObject> refObjectMap = new HashMap<>();
-    fields.forEach((key, value) -> {
-      refObjectMap
-          .put("set" + key.replaceFirst(String.valueOf(key.charAt(0)),
-              String.valueOf(Character.toUpperCase(key.charAt(0)))),
-              value);
-    });
-    return refObjectMap;
-  }
-
-  public Map<Method, RefObject> getInjectFieldsReference() {
-    Map<Method, RefObject> methodRefObjectMap = new HashMap<>();
-    Method[] methods = getTargetClass().getMethods();
-    this.injectFieldsReference.forEach((key, value) -> {
-      for (Method method : methods) {
-        if (method.getName().equals(key)) {
-          methodRefObjectMap.put(method, value);
-
-        }
-      }
-    });
-    return methodRefObjectMap;
+  public Map<String, RefObject> getInjectFieldsReference() {
+    return Collections.unmodifiableMap(this.injectFieldsReference);
   }
 
   private void setInjectFieldsReference(
       Map<String, RefObject> injectFieldsReference) {
-    this.injectFieldsReference = getSetterString(injectFieldsReference);
+    this.injectFieldsReference = injectFieldsReference;
   }
 
   public String getClassFullName() {
@@ -71,6 +52,14 @@ public class DefaultBeanDefinition implements BeanDefinition {
       e.printStackTrace();
     }
     return clazz;
+  }
+
+  @Override
+  public BeanPropertyAccessor getBeanPropertyAccessor() {
+    if (null == this.beanPropertyAccessor) {
+      this.beanPropertyAccessor = SimpleBeanPropertyAccessor.newInstance(getTargetClass());
+    }
+    return this.beanPropertyAccessor;
   }
 
   public static final class DefaultBeanDefinitionBuilder {

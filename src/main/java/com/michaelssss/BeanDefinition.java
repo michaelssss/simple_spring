@@ -1,7 +1,6 @@
 package com.michaelssss;
 
 import com.michaelssss.impl.RefObject;
-import java.lang.reflect.Method;
 import java.util.Map;
 
 /**
@@ -22,5 +21,7 @@ public interface BeanDefinition {
   /**
    * @return Bean需要注入的字段及注入引用对象
    */
-  Map<Method, RefObject> getInjectFieldsReference();
+  Map<String, RefObject> getInjectFieldsReference();
+
+  BeanPropertyAccessor getBeanPropertyAccessor();
 }

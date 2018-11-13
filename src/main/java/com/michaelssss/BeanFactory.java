@@ -2,7 +2,6 @@ package com.michaelssss;
 
 import com.michaelssss.impl.RefObject;
 import com.michaelssss.utils.BeanUtils;
-import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -55,16 +54,13 @@ public class BeanFactory {
   }
 
   private Object doInject(Object instance, BeanDefinition beanDefinition) {
-    Map<Method, RefObject> methodObjectMap = beanDefinition.getInjectFieldsReference();
+    Map<String, RefObject> methodObjectMap = beanDefinition.getInjectFieldsReference();
+    BeanPropertyAccessor accessor = beanDefinition.getBeanPropertyAccessor();
     methodObjectMap.forEach((key, value) -> {
-      try {
-        if (value.isDirectObject()) {
-          key.invoke(instance, value.getDirectValue());
-        } else {
-          key.invoke(instance, this.doGetBean(value.getRefBeanId()));
-        }
-      } catch (Exception e) {
-        throw new InitialBeanFailedException("inject field value failed");
+      if (value.isDirectObject()) {
+        accessor.setProperty(instance, key, value.getDirectValue());
+      } else {
+        accessor.setProperty(instance, key, this.doGetBean(value.getRefBeanId()));
       }
     });
     return instance;
